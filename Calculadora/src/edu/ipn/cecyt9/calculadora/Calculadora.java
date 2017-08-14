@@ -53,7 +53,7 @@ public class Calculadora extends JFrame {
 	 */
 	public Calculadora() {
 		super();
-		setSize(250, 300);
+		setSize(400, 500);
 		setTitle("Calculadora Simple");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -90,6 +90,15 @@ public class Calculadora extends JFrame {
 		nuevoBotonOperacion("-");
 		nuevoBotonOperacion("*");
 		nuevoBotonOperacion("/");
+                
+                nuevoBotonOperacion("^");
+                nuevoBotonOperacion("√");
+                nuevoBotonOperacion("%");
+                nuevoBotonOperacion("log");
+                nuevoBotonOperacion("/");
+                nuevoBotonOperacion("Sen");
+                
+                nuevoBotonOperacion("/");
 		nuevoBotonOperacion("=");
 		nuevoBotonOperacion("CE");
 
@@ -162,22 +171,39 @@ public class Calculadora extends JFrame {
 	 * @param tecla
 	 */
 	private void operacionPulsado(String tecla) {
-		if (tecla.equals("=")) {
-			calcularResultado();
-		} else if (tecla.equals("CE")) {
-			resultado = 0;
-			pantalla.setText("");
-			nuevaOperacion = true;
-		} else {
-			operacion = tecla;
-			if ((resultado > 0) && !nuevaOperacion) {
-				calcularResultado();
-			} else {
-				resultado = new Double(pantalla.getText());
-			}
-		}
+                if (tecla.equals("√")){
+                        resultado = Math.sqrt(new Double (pantalla.getText()));
+                        pantalla.setText("" + resultado);
+                }else{
+                    if(tecla.equals("log")){
+                        resultado = Math.log10(new Double (pantalla.getText()));
+                        pantalla.setText("" + resultado);
+                    }else{
+                        if (tecla.equals("Sen")) {
+                            resultado = Math.sin(Math.toRadians(new Double (pantalla.getText())));
+                            pantalla.setText("" + resultado);
+                        }else{
+                            if (tecla.equals("=")) {
+                                    calcularResultado();
+                            } else if (tecla.equals("CE")) {
+                                    resultado = 0;
+                                    pantalla.setText("");
+                                    nuevaOperacion = true;
+                            } else {
+                                    operacion = tecla;
+                                    if ((resultado > 0) && !nuevaOperacion) {
+                                            calcularResultado();
+                                    } else {
+                                            resultado = new Double(pantalla.getText());
+                                    }
+                            }
 
-		nuevaOperacion = true;
+                            nuevaOperacion = true;
+                        }
+                            
+                    }    
+                }
+		
 	}
 
 	/**
@@ -192,8 +218,12 @@ public class Calculadora extends JFrame {
 			resultado /= new Double(pantalla.getText());
 		} else if (operacion.equals("*")) {
 			resultado *= new Double(pantalla.getText());
-		}
-
+		} else if (operacion.equals("^")){
+                        resultado = Math.pow(resultado, new Double (pantalla.getText()));
+                } else if (operacion.equals("%")){
+                        resultado = ((resultado * 100) / new Double (pantalla.getText()) );
+                }   
+                
 		pantalla.setText("" + resultado);
 		operacion = "";
 	}
