@@ -156,6 +156,8 @@ public class Calculadora extends JFrame {
 	 * @param digito
 	 *            tecla pulsada
 	 */
+        
+        
 	private void numeroPulsado(String digito) {
 		if (pantalla.getText().equals("0") || nuevaOperacion) {
 			pantalla.setText(digito);
